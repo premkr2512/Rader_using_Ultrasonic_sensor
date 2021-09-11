@@ -35,12 +35,61 @@ Serial.begin(9600);
 myServo.attach(D2); 
 void loop()
 {
+for(int i=15;i<=165;i++){
+myServo.write(i);
+delay(30);
+distance = calculateDistance();
 
-
-
-
+Serial.print(i);
+Serial.print(",");
+  Serial.print(distance);
+Serial.println(&quot;.&quot;);
+lcd.clear();
+if(distance<=25)
+{lcd.setCursor(0,0);
+lcd.print("DANGER");
+digitalWrite(3,HIGH);
+delay(10);
+digitalWrite(3,LOW);
+tone(10,600,200);
+delay(10);
+noTone(10);
 }
-
+else
+{
+  lcd.setCursor(0,0);
+ lcd.print("SAFE");
+}
+}
+  
+ for(int i=165;i&gt;15;i--){
+myServo.write(i);
+delay(30);
+distance = calculateDistance();
+Serial.print(i);
+Serial.print(",");
+Serial.println(distance);
+Serial.print(".");
+lcd.clear();
+  
+   if(distance&lt;=25)
+{lcd.setCursor(0,0);
+lcd.print(&quot;DANGER&quot;);
+digitalWrite(3,HIGH);
+delay(10);
+digitalWrite(3,LOW);
+tone(10,600,200);
+delay(10);
+noTone(10);
+}
+else
+  {
+  lcd.setCursor(0,0);
+  lcd.print(&quot;SAFE&quot;);
+}
+ }
+}
+  
 int calculateDistance(){ 
   
   digitalWrite(trigPin, LOW); 
